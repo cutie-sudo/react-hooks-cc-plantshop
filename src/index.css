@@ -135,3 +135,43 @@ input:focus {
     width: calc(20% - 2rem);
   }
 }
+
+
+
+
+
+/* The container for the plant cards (this would go in your PlantList component) */
+.plant-list {
+  display: grid;            /* Use grid layout */
+  grid-template-columns: repeat(4, 1fr);  /* 4 equal-width columns */
+  gap: 16px;                /* Add some space between the cards */
+  padding: 16px;            /* Add padding around the container */
+}
+
+/* Each individual card */
+.card {
+  border: 1px solid #ddd; /* Light border for the cards */
+  border-radius: 8px;      /* Rounded corners */
+  overflow: hidden;        /* Ensure image doesn't overflow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: white; /* Card background */
+}
+
+/* Add responsiveness: Stacks the cards on smaller screens */
+@media (max-width: 1024px) {
+  .plant-list {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on medium-sized screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .plant-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .plant-list {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+}
