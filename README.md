@@ -1,26 +1,22 @@
-##Plantsy - Plant Store Admin Dashboard
-Welcome to Plantsy! This web app is designed for managing plants in an online store. The app allows admins to view and manage plant inventory, including adding new plants, marking them as "sold out," searching for plants by name, and more.
-
-Features:
-View all plants: Displays a list of all plants available in the store.
-Add new plants: Admins can add new plants to the inventory via a form.
-Mark plants as "Sold Out": Admins can mark plants as sold out, which updates their status in the store.
-Search plants: Allows users to search for plants by name.
-
-
 Live Demo
 View Demo GIF
 ![Demo GIF](https://curriculum-content.s3.amazonaws.com/phase-2/react-hooks-mock-code-challenge-plantshop/plantsy_demo.gif)
 
 
-Table of Contents
-Tech Stack
-Core Features
-Advanced Features
-Installation
-Usage
-API Endpoints
-License
+##Plantsy 
+Welcome to Plantsy! This web app is designed for managing plants in an online store. The app allows admins to view and manage plant inventory, including adding new plants, marking them as "sold out," searching for plants by name, and more.
+
+Features:
+View all plants: Displays a list of all plants available in the store.
+
+Add new plants: Admins can add new plants to the inventory via a form.
+
+Mark plants as "Sold Out": Admins can mark plants as sold out, which updates their status in the store.
+
+Search plants: Allows users to search for plants by name.
+
+
+
 
 Tech Stack
 Frontend: React.js, CSS
@@ -46,17 +42,10 @@ Node.js: You can download it from here
 npm (comes with Node.js)
 Setup
 Clone this repository to your local machine.
+git clone (git@github.com:cutie-sudo/react-hooks-cc-plantshop.git)
 
-bash
-Copy code
-git clone https://github.com/your-username/plantsy.git
-cd plantsy
-Install dependencies.
 
-bash
-Copy code
-npm install
-Run the backend (mock API server).
+
 
 bash
 Copy code
@@ -70,10 +59,7 @@ Copy code
 npm start
 This will start the frontend on http://localhost:3000.
 
-Usage
-Open http://localhost:3000 in your browser.
-You should now be able to view and interact with the plant store admin dashboard.
-Use the form to add new plants to the store, and use the "Mark as Sold Out" button to update plant statuses.
+
 API Endpoints
 The app interacts with the following API endpoints:
 
@@ -97,6 +83,9 @@ Copy code
     "price": 25.98
   }
 ]
+
+
+
 POST /plants
 Add a new plant to the store.
 
@@ -119,6 +108,9 @@ Copy code
   "image": "./images/aloe.jpg",
   "price": 15.99
 }
+
+
+
 PATCH /plants/
 Update a plant (e.g., mark as sold out or update price).
 
@@ -140,6 +132,10 @@ Copy code
   "price": 15.99,
   "soldOut": true
 }
+
+
+
+
 DELETE /plants/
 Delete a plant from the inventory.
 
@@ -147,5 +143,7 @@ Response:
 json
 Copy code
 {}
+
+
 License
-This project is licensed under the MIT License (https://github.com/cutie-sudo/Phase-1-Project/blob/main/license.md*)
+This project is licensed under the MIT License 
