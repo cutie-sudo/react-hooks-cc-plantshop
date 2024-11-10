@@ -6,6 +6,8 @@ function NewPlantForm({ plantArr, setPlantArr }) {
     image: '',
     price: '',
   });
+  const [loading, setLoading] = useState(false); // New loading state
+  const [error, setError] = useState(''); // New error state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +20,13 @@ function NewPlantForm({ plantArr, setPlantArr }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Basic validation
     if (!form.name || !form.image || !form.price) {
-      alert("Please fill in all fields!");
+      setError("Please fill in all fields!");
       return;
     }
+
+    setLoading(true);  // Start loading state
 
     fetch('http://localhost:6001/plants', {
       method: 'POST',
@@ -32,19 +37,19 @@ function NewPlantForm({ plantArr, setPlantArr }) {
     })
       .then((res) => res.json())
       .then((newPlant) => {
-        // Update the plant list with the newly added plant
         setPlantArr((prevPlants) => [newPlant, ...prevPlants]);
-
-        // Clear the form fields after submission
         setForm({
           name: '',
           image: '',
           price: '',
         });
+        setError('');  // Clear any previous errors
+        setLoading(false);  // Stop loading state
       })
       .catch((error) => {
         console.error('Error adding plant:', error);
-        alert('Error adding plant. Please try again later.');
+        setError('Error adding plant. Please try again later.');
+        setLoading(false);  // Stop loading state
       });
   };
 
@@ -73,7 +78,10 @@ function NewPlantForm({ plantArr, setPlantArr }) {
           onChange={handleChange}
           placeholder="Price"
         />
-        <button type="submit">Add Plant</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Show error message */}
+        <button type="submit" disabled={loading}>
+          {loading ? 'Adding...' : 'Add Plant'}
+        </button>
       </form>
     </div>
   );
