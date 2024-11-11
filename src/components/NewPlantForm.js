@@ -1,55 +1,55 @@
 import React, { useState } from 'react';
 
-function NewPlantForm({ plantArr, setPlantArr }) {
-  const [form, setForm] = useState({
-    name: '',
-    image: '',
-    price: '',
-  });
-  const [loading, setLoading] = useState(false); // New loading state
-  const [error, setError] = useState(''); // New error state
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+function NewPlantForm({ addPlant }) {
+  const [plantName, setPlantName] = useState("");
+  const [image, setImage] = useState("");
+  const [price, setPrice] = useState("");
+  const [loading, setLoading] = useState(false); // Track loading state
+  const [error, setError] = useState(null); // Track error state
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Basic validation
-    if (!form.name || !form.image || !form.price) {
-      setError("Please fill in all fields!");
+    
+    // Validation check for inputs
+    if (!plantName || !image || !price) {
+      setError("All fields are required!");
       return;
     }
+    
+    setLoading(true);
+    setError(null); // Reset error message if all fields are valid
 
-    setLoading(true);  // Start loading state
+    const newPlant = {
+      name: plantName,
+      image,
+      price: parseFloat(price),
+      inStock: true,
+    };
 
-    fetch('http://localhost:6001/plants', {
-      method: 'POST',
+    // Send POST request to add the new plant
+    fetch("http://localhost:6001/plants", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(newPlant),
     })
-      .then((res) => res.json())
-      .then((newPlant) => {
-        setPlantArr((prevPlants) => [newPlant, ...prevPlants]);
-        setForm({
-          name: '',
-          image: '',
-          price: '',
-        });
-        setError('');  // Clear any previous errors
-        setLoading(false);  // Stop loading state
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to add plant");
+        }
+        return res.json();
       })
-      .catch((error) => {
-        console.error('Error adding plant:', error);
-        setError('Error adding plant. Please try again later.');
-        setLoading(false);  // Stop loading state
+      .then((data) => {
+        addPlant(data); // Call the callback to update parent state
+        setPlantName("");
+        setImage("");
+        setPrice("");
+        setLoading(false); // Stop loading when request is done
+      })
+      .catch((err) => {
+        setError(err.message); // Show error message if something goes wrong
+        setLoading(false);
       });
   };
 
@@ -60,25 +60,25 @@ function NewPlantForm({ plantArr, setPlantArr }) {
         <input
           type="text"
           name="name"
-          value={form.name}
-          onChange={handleChange}
+          value={plantName}
+          onChange={(e) => setPlantName(e.target.value)}
           placeholder="Plant name"
         />
         <input
           type="text"
           name="image"
-          value={form.image}
-          onChange={handleChange}
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
           placeholder="Image URL"
         />
         <input
           type="number"
           name="price"
-          value={form.price}
-          onChange={handleChange}
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           placeholder="Price"
         />
-        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Show error message */}
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Show error message */}
         <button type="submit" disabled={loading}>
           {loading ? 'Adding...' : 'Add Plant'}
         </button>

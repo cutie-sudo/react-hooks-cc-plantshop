@@ -1,30 +1,19 @@
 import React from "react";
 
-function PlantCard({ plant, onDelete }) {
-  const [inStock, setInStock] = React.useState(true); // Manage inStock state
-
-  const handleDelete = () => {
-    // Call the onDelete function passed as prop to remove plant from the list
-    onDelete(plant.id);
-  };
-
+function PlantCard({ name, price, image, soldOut, toggleSoldOut }) {
   return (
     <li className="card" data-testid="plant-item">
-      <img src={plant.image || "https://via.placeholder.com/400"} alt={plant.name} />
-      <h4>{plant.name}</h4>
-      <p>Price: ${plant.price}</p>
-
-      {inStock ? (
-        <button onClick={() => setInStock(false)} className="primary">
-          In Stock
-        </button>
+      <img src={image || "https://via.placeholder.com/400"} alt={name} />
+      <h4>{name}</h4>
+      <p>Price: ${price}</p>
+      {soldOut ? (
+        <button className="sold-out">Sold Out</button> // Show Sold Out button if plant is sold out
       ) : (
-        <button disabled>Out of Stock</button>
+        <button className="primary">In Stock</button> // Show In Stock button if plant is available
       )}
-
-      {/* Delete Button */}
-      <button onClick={handleDelete} className="delete-btn">
-        Delete
+      <button onClick={() => toggleSoldOut()} className="toggle-sold-out">
+        {soldOut ? "Mark as Available" : "Mark as Sold Out"}{" "}
+        
       </button>
     </li>
   );

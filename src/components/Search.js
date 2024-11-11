@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Search({ onSearch }) {
-  const [query, setQuery] = useState("");
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setQuery(value);
-    onSearch(value); // Pass search query to the parent component
+function Search({ setSearchQuery }) {
+  const handleChange = (event) => {
+    setSearchQuery(event.target.value); // Update the search query state when the user types
   };
 
   return (
-    <div className="searchbar">
-      <label htmlFor="search">Search Plants:</label>
+    <div className="search">
       <input
         type="text"
-        id="search"
-        placeholder="Type a name to search..."
-        value={query}
-        onChange={handleChange}
+        placeholder="Search for a plant..."
+        onChange={handleChange} // Listen for changes to the input field
       />
     </div>
   );
