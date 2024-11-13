@@ -9,10 +9,18 @@ function PlantPage() {
 
   // Fetch plants data from the server
   useEffect(() => {
-    fetch("https://react-hooks-cc-plantshop-2-w4do.onrender.com/plants")
+    const url = `https://react-hooks-cc-plantshop-2-w4do.onrender.com/plants?_=${new Date().getTime()}`;
+  
+    fetch(url)
       .then((res) => res.json())
-      .then((data) => setPlants(data));
+      .then((data) => {
+        console.log(data); // Or handle your data as needed
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
+  
 
   const addPlant = (newPlant) => {
     setPlants((prevPlants) => [...prevPlants, newPlant]); // Add new plant to the list

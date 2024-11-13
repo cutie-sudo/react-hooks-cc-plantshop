@@ -1,5 +1,7 @@
+// Ensure imports are at the top level of the file
 import React, { useState } from 'react';
 
+// NewPlantForm component definition
 function NewPlantForm({ addPlant }) {
   const [plantName, setPlantName] = useState("");
   const [image, setImage] = useState("");
@@ -9,13 +11,18 @@ function NewPlantForm({ addPlant }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Validation check for inputs
     if (!plantName || !image || !price) {
       setError("All fields are required!");
       return;
     }
-    
+
+    if (isNaN(price) || !price) {
+      setError("Price must be a valid number!");
+      return;
+    }
+
     setLoading(true);
     setError(null); // Reset error message if all fields are valid
 
@@ -27,7 +34,8 @@ function NewPlantForm({ addPlant }) {
     };
 
     // Send POST request to add the new plant
-    fetch("https://react-hooks-cc-plantshop-2-w4do.onrender.com/plants", {
+    const url = `https://react-hooks-cc-plantshop-2-w4do.onrender.com/plants?_=${new Date().getTime()}`;
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,4 +95,5 @@ function NewPlantForm({ addPlant }) {
   );
 }
 
+// Exporting the NewPlantForm component at the top level
 export default NewPlantForm;
